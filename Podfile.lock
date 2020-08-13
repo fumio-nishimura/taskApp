@@ -4,19 +4,23 @@ PODS:
   - Realm/Headers (5.1.0)
   - RealmSwift (5.1.0):
     - Realm (= 5.1.0)
+  - TagListView (1.4.0)
 
 DEPENDENCIES:
   - RealmSwift (= 5.1.0)
+  - TagListView (= 1.4.0)
 
 SPEC REPOS:
   trunk:
     - Realm
     - RealmSwift
+    - TagListView
 
 SPEC CHECKSUMS:
   Realm: bdea546851e37b4cf0a2400cef115c7c26fda488
   RealmSwift: 70945aa168db93b215c460e9c8ef680261aa28af
+  TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
 
-PODFILE CHECKSUM: 941d95e444bbdfb9544aa39049b9f836e01ca5f4
+PODFILE CHECKSUM: 256d050cb608112709916eee873171ff9b61d616
 
 COCOAPODS: 1.9.3

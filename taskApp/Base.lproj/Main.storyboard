@@ -18,9 +18,14 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BFo-0d-FWp">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" placeholder="カテゴリを入力してください" id="6kd-AQ-spR">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="f2L-Lp-9Rk" detailTextLabel="gDx-6M-TIn" style="IBUITableViewCellStyleSubtitle" id="jZC-Kx-abp">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="72" width="414" height="55.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jZC-Kx-abp" id="j1M-fY-xTM">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
@@ -63,7 +68,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableView" destination="BFo-0d-FWp" id="5h4-mI-NY8"/>
+                        <outlet property="searchBar" destination="6kd-AQ-spR" id="f8S-GN-mBg"/>
+                        <outlet property="tableView" destination="BFo-0d-FWp" id="vgn-Jn-y5v"/>
                         <segue destination="DjS-kA-8YJ" kind="show" identifier="cellSegue" id="5vV-qX-8gL"/>
                     </connections>
                 </viewController>
@@ -79,7 +85,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oje-af-unJ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="タイトル" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oje-af-unJ">
                                 <rect key="frame" x="10" y="98" width="394" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -90,7 +96,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reG-qX-DUA">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="内容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reG-qX-DUA">
                                 <rect key="frame" x="10" y="173" width="394" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -113,32 +119,50 @@
                                     <constraint firstAttribute="height" constant="120" id="p70-xi-9aA"/>
                                 </constraints>
                             </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="カテゴリ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gPU-ra-QKt">
+                                <rect key="frame" x="10" y="464" width="394" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7XV-Ld-9jy">
+                                <rect key="frame" x="10" y="495" width="394" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Oje-af-unJ" firstAttribute="top" secondItem="WXK-cP-TCo" secondAttribute="top" constant="10" id="3Kf-w0-PaU"/>
                             <constraint firstItem="Oje-af-unJ" firstAttribute="leading" secondItem="WXK-cP-TCo" secondAttribute="leading" constant="10" id="78N-QO-a7N"/>
                             <constraint firstItem="reG-qX-DUA" firstAttribute="top" secondItem="2GW-tp-rMj" secondAttribute="bottom" constant="10" id="8FE-K2-u7i"/>
+                            <constraint firstItem="WXK-cP-TCo" firstAttribute="trailing" secondItem="gPU-ra-QKt" secondAttribute="trailing" constant="10" id="A4r-vd-ABK"/>
                             <constraint firstItem="WXK-cP-TCo" firstAttribute="trailing" secondItem="JDY-gu-UqR" secondAttribute="trailing" constant="10" id="ACg-Su-XdX"/>
                             <constraint firstItem="JDY-gu-UqR" firstAttribute="top" secondItem="reG-qX-DUA" secondAttribute="bottom" constant="10" id="FpS-vo-W68"/>
                             <constraint firstItem="JDY-gu-UqR" firstAttribute="leading" secondItem="WXK-cP-TCo" secondAttribute="leading" constant="10" id="Kxp-Df-3Bp"/>
                             <constraint firstItem="O8x-6p-0TX" firstAttribute="trailing" secondItem="WXK-cP-TCo" secondAttribute="trailing" id="RwV-9G-m8j"/>
+                            <constraint firstItem="gPU-ra-QKt" firstAttribute="top" secondItem="O8x-6p-0TX" secondAttribute="bottom" constant="10" id="UKV-P3-rPh"/>
                             <constraint firstItem="O8x-6p-0TX" firstAttribute="leading" secondItem="WXK-cP-TCo" secondAttribute="leading" id="USb-dF-Ffd"/>
                             <constraint firstItem="2GW-tp-rMj" firstAttribute="top" secondItem="Oje-af-unJ" secondAttribute="bottom" constant="10" id="VAf-4q-c1v"/>
                             <constraint firstItem="WXK-cP-TCo" firstAttribute="trailing" secondItem="reG-qX-DUA" secondAttribute="trailing" constant="10" id="cSq-72-6EZ"/>
                             <constraint firstItem="2GW-tp-rMj" firstAttribute="leading" secondItem="WXK-cP-TCo" secondAttribute="leading" constant="10" id="clf-bG-uM9"/>
                             <constraint firstItem="reG-qX-DUA" firstAttribute="leading" secondItem="WXK-cP-TCo" secondAttribute="leading" constant="10" id="e7C-Dk-ovD"/>
                             <constraint firstItem="WXK-cP-TCo" firstAttribute="trailing" secondItem="Oje-af-unJ" secondAttribute="trailing" constant="10" id="gjJ-xQ-C2T"/>
+                            <constraint firstItem="7XV-Ld-9jy" firstAttribute="leading" secondItem="WXK-cP-TCo" secondAttribute="leading" constant="10" id="rrG-EJ-b82"/>
                             <constraint firstItem="O8x-6p-0TX" firstAttribute="top" secondItem="JDY-gu-UqR" secondAttribute="bottom" constant="10" id="slg-61-k96"/>
+                            <constraint firstItem="gPU-ra-QKt" firstAttribute="leading" secondItem="WXK-cP-TCo" secondAttribute="leading" constant="10" id="t2L-e3-g4U"/>
+                            <constraint firstItem="7XV-Ld-9jy" firstAttribute="top" secondItem="gPU-ra-QKt" secondAttribute="bottom" constant="10" id="tPJ-hy-Bal"/>
+                            <constraint firstItem="WXK-cP-TCo" firstAttribute="trailing" secondItem="7XV-Ld-9jy" secondAttribute="trailing" constant="10" id="uSJ-ly-DSP"/>
                             <constraint firstItem="WXK-cP-TCo" firstAttribute="trailing" secondItem="2GW-tp-rMj" secondAttribute="trailing" constant="10" id="yWE-w4-GGG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WXK-cP-TCo"/>
                     </view>
                     <navigationItem key="navigationItem" id="7js-f2-dN8"/>
                     <connections>
-                        <outlet property="contentsTextView" destination="JDY-gu-UqR" id="IKf-dX-1lJ"/>
-                        <outlet property="datePicker" destination="O8x-6p-0TX" id="yUf-p4-cOJ"/>
-                        <outlet property="titleTextField" destination="2GW-tp-rMj" id="Zjq-Z0-aXc"/>
+                        <outlet property="categoryTextField" destination="7XV-Ld-9jy" id="fMj-J0-MZ1"/>
+                        <outlet property="contentsTextView" destination="JDY-gu-UqR" id="byl-pA-30I"/>
+                        <outlet property="datePicker" destination="O8x-6p-0TX" id="noS-sN-aUf"/>
+                        <outlet property="titleTextField" destination="2GW-tp-rMj" id="LUe-Y0-S9x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dP3-Sk-9WD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

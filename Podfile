@@ -7,5 +7,6 @@ target 'taskApp' do
 
   # Pods for taskApp
   pod 'RealmSwift','5.1.0'
+  pod 'TagListView','1.4.0'
 
 end

@@ -9,9 +9,11 @@
 import UIKit
 import RealmSwift
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     // Realm インスタンスを取得する
     let realm = try! Realm()
@@ -24,6 +26,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        searchBar.delegate = self
+    }
+    
+    // カテゴリを検索し、テーブルビューを再表示する
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: true)
+        } else {
+            taskArray = realm.objects(Task.self).filter("category == %@", searchText)
+        }
+        
+        tableView.reloadData()
     }
     
     // データの数（=セルの数）を返すメソッド
@@ -36,7 +53,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         // Cell に値を設定する
-        let task = taskArray[indexPath.row]
+        let task = taskArray [indexPath.row]
         cell.textLabel?.text = task.title
         
         let formatter = DateFormatter()
@@ -59,13 +76,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-            let task = self.taskArray[indexPath.row]
+            let task = self.taskArray [indexPath.row]
             
             let center = UNUserNotificationCenter.current()
             center.removePendingNotificationRequests(withIdentifiers: [String(task.id)])
             // データベースから削除する
             try! realm.write {
-                self.realm.delete(self.taskArray[indexPath.row])
+                self.realm.delete(task)
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
             
@@ -83,7 +100,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let inputViewController:InputViewController = segue.destination as! InputViewController
         
-        if segue.identifier == "cellsegue" {
+        if segue.identifier == "cellSegue" {
             let indexPath = self.tableView.indexPathForSelectedRow
             inputViewController.task = taskArray[indexPath!.row]
         } else {
@@ -97,7 +114,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             inputViewController.task = task
         }
     }
-    
+    // 入力画面から戻ってきた時に TableView を更新させる
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()

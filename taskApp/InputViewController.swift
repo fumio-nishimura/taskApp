@@ -10,16 +10,17 @@ import UIKit
 import RealmSwift
 import UserNotifications
 
+
 class InputViewController: UIViewController {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var categoryTextField: UITextField!
     
     let realm = try! Realm()
-    var task: Task! 
-    
-    
+    var task: Task!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,13 +33,17 @@ class InputViewController: UIViewController {
         titleTextField.text = task.title
         contentsTextView.text = task.contents
         datePicker.date = task.date
+        categoryTextField.text = task.category
     }
     
+    // 画面から非表示になる直前の処理
     override func viewWillDisappear(_ animated: Bool) {
         try! realm.write {
             self.task.title = self.titleTextField.text!
             self.task.contents = self.contentsTextView.text
             self.task.date = self.datePicker.date
+            self.task.category = self.categoryTextField.text!
+
             self.realm.add(self.task, update: .modified)
         }
         
@@ -46,6 +51,7 @@ class InputViewController: UIViewController {
         
         super.viewWillDisappear(animated)
     }
+    
     // タスクのローカル通知を登録する
     func setNotification(task: Task) {
         let content = UNMutableNotificationContent()
@@ -61,12 +67,10 @@ class InputViewController: UIViewController {
             content.body = task.contents
         }
         content.sound = UNNotificationSound.default
-        
         // ローカル通知が発動する trigger（日付マッチ）を作成
         let calendar = Calendar.current
         let dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: task.date)
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-        
         // identifier, content, trigger からローカル通知を作成（identifier が同じだとローカル通知を上書き保存）
         let request = UNNotificationRequest(identifier: String(task.id), content: content, trigger: trigger)
         // ローカル通知を登録
@@ -74,7 +78,6 @@ class InputViewController: UIViewController {
         center.add(request) { (error) in
             print(error ?? "ローカル通知登録 OK") // error が nil ならローカル通知の登録に成功したと表示します。 error が存在すれば error を表示します。
         }
-        
         // 未通知のローカル通知一覧をログ出力
         center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
             for request in requests {
@@ -90,7 +93,6 @@ class InputViewController: UIViewController {
         view.endEditing(true)
     }
     
-
     /*
     // MARK: - Navigation
 
